@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+
+import '../config/app_config.dart';
+import '../screens/genre_screen.dart';
+
+class CustomDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: const Text(
+              AppConfig.title,
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            decoration: BoxDecoration(color: Colors.blue),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.category),
+            title: const Text('Genres'),
+            onTap: () {
+              Navigator.pushReplacementNamed(
+                context,
+                GenreScreen.routeName,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
