@@ -56,6 +56,11 @@ class CustomDrawer extends StatelessWidget {
               );
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.supervised_user_circle),
+            title: const Text('Logout'),
+            onTap: () {},
+          ),
         ],
       ),
     );

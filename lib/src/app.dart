@@ -4,6 +4,7 @@ import './screens/home_screen.dart';
 import './screens/genre_screen.dart';
 import './screens/movie_screen.dart';
 import './screens/checkout_screen.dart';
+import './screens/login_screen.dart';
 
 class App extends StatelessWidget {
   @override
@@ -14,12 +15,14 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xffef6c00),
       ),
-      home: HomeScreen(),
-      routes: {
-        GenreScreen.routeName: (context) => GenreScreen(),
-        MovieScreen.routeName: (context) => MovieScreen(),
-        CheckoutScreen.routeName: (context) => CheckoutScreen(),
-      },
+      home: LoginScreen(),
     );
   }
 }
+
+// home: HomeScreen(),
+//       routes: {
+//         GenreScreen.routeName: (context) => GenreScreen(),
+//         MovieScreen.routeName: (context) => MovieScreen(),
+//         CheckoutScreen.routeName: (context) => CheckoutScreen(),
+//       },

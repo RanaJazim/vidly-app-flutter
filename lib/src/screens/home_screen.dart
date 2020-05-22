@@ -12,6 +12,9 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: CustomDrawer(),
+      body: Center(
+        child: const Text('Home Screen'),
+      ),
     );
   }
 }
