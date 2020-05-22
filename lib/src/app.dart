@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './screens/home_screen.dart';
 import './screens/genre_screen.dart';
 import './screens/movie_screen.dart';
+import './screens/checkout_screen.dart';
 
 class App extends StatelessWidget {
   @override
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
       routes: {
         GenreScreen.routeName: (context) => GenreScreen(),
         MovieScreen.routeName: (context) => MovieScreen(),
+        CheckoutScreen.routeName: (context) => CheckoutScreen(),
       },
     );
   }

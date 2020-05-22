@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../config/app_config.dart';
 import '../screens/genre_screen.dart';
 import '../screens/movie_screen.dart';
+import '../screens/checkout_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -42,6 +43,16 @@ class CustomDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(
                 context,
                 MovieScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_cart),
+            title: const Text('Checkout'),
+            onTap: () {
+              Navigator.pushReplacementNamed(
+                context,
+                CheckoutScreen.routeName,
               );
             },
           ),
