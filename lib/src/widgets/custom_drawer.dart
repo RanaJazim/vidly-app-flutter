@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../config/app_config.dart';
 import '../screens/genre_screen.dart';
+import '../screens/movie_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -31,6 +32,16 @@ class CustomDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(
                 context,
                 GenreScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.movie),
+            title: const Text('Movies'),
+            onTap: () {
+              Navigator.pushReplacementNamed(
+                context,
+                MovieScreen.routeName,
               );
             },
           ),
