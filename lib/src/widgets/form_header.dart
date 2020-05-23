@@ -25,17 +25,19 @@ class FormHeader extends StatelessWidget {
           bottom: 0,
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xffee5164),
-              ),
-              child: Text(
-                '$title',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            child: ClipOval(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  // shape: BoxShape.circle,
+                  color: Color(0xffee5164),
+                ),
+                child: Text(
+                  '$title',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

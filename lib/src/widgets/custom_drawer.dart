@@ -4,6 +4,8 @@ import '../config/app_config.dart';
 import '../screens/genre_screen.dart';
 import '../screens/movie_screen.dart';
 import '../screens/checkout_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/home_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -23,7 +25,10 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacementNamed(
+                context,
+                HomeScreen.routeName,
+              );
             },
           ),
           ListTile(
@@ -59,7 +64,14 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.supervised_user_circle),
             title: const Text('Logout'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),

@@ -16,13 +16,19 @@ class App extends StatelessWidget {
         primaryColor: Color(0xffef6c00),
       ),
       home: LoginScreen(),
+      routes: {
+        HomeScreen.routeName: (context) => HomeScreen(),
+        GenreScreen.routeName: (context) => GenreScreen(),
+        MovieScreen.routeName: (context) => MovieScreen(),
+        CheckoutScreen.routeName: (context) => CheckoutScreen(),
+      },
     );
   }
 }
 
 // home: HomeScreen(),
-//       routes: {
-//         GenreScreen.routeName: (context) => GenreScreen(),
-//         MovieScreen.routeName: (context) => MovieScreen(),
-//         CheckoutScreen.routeName: (context) => CheckoutScreen(),
-//       },
+      // routes: {
+      //   GenreScreen.routeName: (context) => GenreScreen(),
+      //   MovieScreen.routeName: (context) => MovieScreen(),
+      //   CheckoutScreen.routeName: (context) => CheckoutScreen(),
+      // },

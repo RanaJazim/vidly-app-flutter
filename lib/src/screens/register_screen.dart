@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../widgets/form_header.dart';
 import '../widgets/navigation_action.dart';
-import './register_screen.dart';
-import './password_forget_screen.dart';
-import './home_screen.dart';
+import './login_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: Column(
           children: <Widget>[
-            FormHeader('Login'),
-            // SizedBox(height: 60),
+            FormHeader('Register'),
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(20),
@@ -36,9 +33,17 @@ class _LoginForm extends StatelessWidget {
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-                labelText: "Email",
-                hintText: "example@example.com",
+                labelText: "Username",
+                hintText: "Jazim Abbas",
                 border: const OutlineInputBorder()),
+          ),
+          SizedBox(height: 20),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: "email",
+              hintText: "example@example.com",
+              border: const OutlineInputBorder(),
+            ),
           ),
           SizedBox(height: 20),
           TextFormField(
@@ -47,19 +52,14 @@ class _LoginForm extends StatelessWidget {
               border: const OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 10),
-          NavigateAction(
-            'Forgot Password',
-            () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PasswordForgetScreen(),
-                ),
-              );
-            },
+          SizedBox(height: 20),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: "Password Confirmation",
+              border: const OutlineInputBorder(),
+            ),
           ),
-          SizedBox(height: 120),
+          SizedBox(height: 15),
           _ActionButtons(),
         ],
       ),
@@ -78,28 +78,23 @@ class _ActionButtons extends StatelessWidget {
           child: FlatButton(
             color: const Color(0xffee5164),
             child: const Text(
-              'SIGN IN',
+              'SIGN UP',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onPressed: () {
-              Navigator.pushReplacementNamed(
-                context,
-                HomeScreen.routeName,
-              );
-            },
+            onPressed: () {},
           ),
         ),
         SizedBox(height: 10),
         NavigateAction(
-          'SIGN UP',
+          'SIGN IN',
           () {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => RegisterScreen(),
+                builder: (context) => LoginScreen(),
               ),
             );
           },

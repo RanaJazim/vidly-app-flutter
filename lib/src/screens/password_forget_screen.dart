@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../widgets/form_header.dart';
 import '../widgets/navigation_action.dart';
-import './register_screen.dart';
-import './password_forget_screen.dart';
-import './home_screen.dart';
+import './login_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class PasswordForgetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: Column(
           children: <Widget>[
-            FormHeader('Login'),
+            FormHeader('Forget Password'),
             // SizedBox(height: 60),
             Expanded(
               child: Container(
@@ -40,26 +38,7 @@ class _LoginForm extends StatelessWidget {
                 hintText: "example@example.com",
                 border: const OutlineInputBorder()),
           ),
-          SizedBox(height: 20),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: "Password",
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 10),
-          NavigateAction(
-            'Forgot Password',
-            () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PasswordForgetScreen(),
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 120),
+          SizedBox(height: 50),
           _ActionButtons(),
         ],
       ),
@@ -78,28 +57,23 @@ class _ActionButtons extends StatelessWidget {
           child: FlatButton(
             color: const Color(0xffee5164),
             child: const Text(
-              'SIGN IN',
+              'SUBMIT',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onPressed: () {
-              Navigator.pushReplacementNamed(
-                context,
-                HomeScreen.routeName,
-              );
-            },
+            onPressed: () {},
           ),
         ),
         SizedBox(height: 10),
         NavigateAction(
-          'SIGN UP',
+          'BACK',
           () {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => RegisterScreen(),
+                builder: (context) => LoginScreen(),
               ),
             );
           },
