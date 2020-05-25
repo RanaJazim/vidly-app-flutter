@@ -16,9 +16,12 @@ class FormHeader extends StatelessWidget {
       children: <Widget>[
         ClipPath(
           clipper: FormClipper(),
-          child: Image.network(
-            img,
-            fit: BoxFit.cover,
+          child: Container(
+            width: double.infinity,
+            child: Image.network(
+              img,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Positioned.fill(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/form_header.dart';
 import '../widgets/navigation_action.dart';
 import './login_screen.dart';
+import '../providers/auth.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -25,13 +27,85 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _LoginForm extends StatefulWidget {
+  @override
+  __LoginFormState createState() => __LoginFormState();
+}
+
+class __LoginFormState extends State<_LoginForm> {
+  var isLoad = false;
+
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  _registerUser() async {
+    setState(() {
+      isLoad = true;
+    });
+
+    final auth = Provider.of<Auth>(context, listen: false);
+
+    try {
+      await auth.register(
+        _nameController.text,
+        _emailController.text,
+        _passwordController.text,
+      );
+
+      // all done should be navigate to the login screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => LoginScreen(),
+        ),
+      );
+    } catch (ex) {
+      setState(
+        () {
+          isLoad = false;
+        },
+      );
+
+      return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const Text('Something Wrong'),
+            content: Text(
+              '${ex.toString()}',
+              style: TextStyle(fontSize: 12),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('Close'),
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
       child: ListView(
         children: <Widget>[
           TextFormField(
+            controller: _nameController,
             decoration: InputDecoration(
                 labelText: "Username",
                 hintText: "Jazim Abbas",
@@ -39,54 +113,50 @@ class _LoginForm extends StatelessWidget {
           ),
           SizedBox(height: 20),
           TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
-              labelText: "email",
+              labelText: "Email",
               hintText: "example@example.com",
               border: const OutlineInputBorder(),
             ),
           ),
           SizedBox(height: 20),
           TextFormField(
+            controller: _passwordController,
             decoration: InputDecoration(
               labelText: "Password",
               border: const OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 20),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: "Password Confirmation",
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 15),
-          _ActionButtons(),
+          SizedBox(height: 35),
+          _actionButtons(context),
         ],
       ),
     );
   }
-}
 
-class _ActionButtons extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _actionButtons(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        SizedBox(
-          width: double.infinity,
-          child: FlatButton(
-            color: const Color(0xffee5164),
-            child: const Text(
-              'SIGN UP',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+        isLoad
+            ? Center(child: CircularProgressIndicator())
+            : SizedBox(
+                width: double.infinity,
+                child: FlatButton(
+                  color: const Color(0xffee5164),
+                  child: const Text(
+                    'SIGN UP',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    _registerUser();
+                  },
+                ),
               ),
-            ),
-            onPressed: () {},
-          ),
-        ),
         SizedBox(height: 10),
         NavigateAction(
           'SIGN IN',
