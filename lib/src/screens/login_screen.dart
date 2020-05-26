@@ -5,7 +5,6 @@ import '../widgets/form_header.dart';
 import '../widgets/navigation_action.dart';
 import './register_screen.dart';
 import './password_forget_screen.dart';
-import './home_screen.dart';
 import '../providers/auth.dart';
 
 class LoginScreen extends StatelessWidget {

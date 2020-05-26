@@ -6,6 +6,7 @@ import './screens/genre_screen.dart';
 import './screens/movie_screen.dart';
 import './screens/checkout_screen.dart';
 import './screens/login_screen.dart';
+import './screens/splash_screen.dart';
 import './providers/auth.dart';
 
 class App extends StatelessWidget {
@@ -20,7 +21,25 @@ class App extends StatelessWidget {
           theme: ThemeData(
             primaryColor: Color(0xffef6c00),
           ),
-          home: auth.isAuthenticated() ? HomeScreen() : LoginScreen(),
+          home: auth.isAuth
+              ? HomeScreen()
+              : FutureBuilder<bool>(
+                  future: auth.autoLogin(),
+                  builder: (_, AsyncSnapshot<bool> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return SplashScreen();
+                    }
+                    else {
+                      final isLogin = snapshot.data;
+                      if (isLogin) {
+                        return HomeScreen();
+                      }
+                      else {
+                        return LoginScreen();
+                      }
+                    }
+                  },
+                ),
           routes: {
             HomeScreen.routeName: (context) => HomeScreen(),
             GenreScreen.routeName: (context) => GenreScreen(),
@@ -32,10 +51,3 @@ class App extends StatelessWidget {
     );
   }
 }
-
-// home: HomeScreen(),
-// routes: {
-//   GenreScreen.routeName: (context) => GenreScreen(),
-//   MovieScreen.routeName: (context) => MovieScreen(),
-//   CheckoutScreen.routeName: (context) => CheckoutScreen(),
-// },

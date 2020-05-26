@@ -19,4 +19,11 @@ class LocalStorage {
     return await prefs.remove('user');
   }
 
+  Future<bool> isUserExist() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (prefs.containsKey('user')) return true;
+    return false;
+  }
+
 }
