@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/custom_drawer.dart';
 import './single_movie_screen.dart';
+import '../services/genre_service.dart';
 
 class MovieScreen extends StatelessWidget {
   static const routeName = '/movie';
@@ -60,38 +61,25 @@ class MovieScreen extends StatelessWidget {
   }
 
   Widget _popMenu() {
-    return PopupMenuButton(
-      onSelected: (_) {},
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: 1,
-          child: ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text("All"),
-          ),
-        ),
-        PopupMenuItem(
-          value: 2,
-          child: ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text("Comdey"),
-          ),
-        ),
-        PopupMenuItem(
-          value: 3,
-          child: ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text("Action"),
-          ),
-        ),
-        PopupMenuItem(
-          value: 4,
-          child: ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text("Horror"),
-          ),
-        ),
-      ],
+    return FutureBuilder(
+      future: fetchAllGenres(),
+      builder: (ctx, AsyncSnapshot<List<Genre>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else {
+          return PopupMenuButton(
+            onSelected: (_) {},
+            itemBuilder: (ctx) => snapshot.data
+                .map(
+                  (genre) => PopupMenuItem(
+                    value: genre.id,
+                    child: Text('${genre.name}'),
+                  ),
+                )
+                .toList(),
+          );
+        }
+      },
     );
   }
 }

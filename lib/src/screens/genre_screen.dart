@@ -56,7 +56,7 @@ class GenreScreen extends StatelessWidget {
               ),
               child: ClipOval(
                 child: Image.network(
-                  "${genre.imgUrl}",
+                  "",
                   fit: BoxFit.cover,
                 ),
               ),

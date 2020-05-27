@@ -18,9 +18,9 @@ class App extends StatelessWidget {
         builder: (ctx, auth, _) => MaterialApp(
           title: "Ecommerece App",
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primaryColor: Color(0xffef6c00),
-          ),
+          // theme: ThemeData(
+          //   primaryColor: Color(0xffef6c00),
+          // ),
           home: auth.isAuth
               ? HomeScreen()
               : FutureBuilder<bool>(
