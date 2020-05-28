@@ -3,9 +3,18 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_drawer.dart';
 import './single_movie_screen.dart';
 import '../services/genre_service.dart';
+import '../services/movie_service.dart';
+import '../models/movie.dart';
 
-class MovieScreen extends StatelessWidget {
+class MovieScreen extends StatefulWidget {
   static const routeName = '/movie';
+
+  @override
+  _MovieScreenState createState() => _MovieScreenState();
+}
+
+class _MovieScreenState extends State<MovieScreen> {
+  var _selectedGenre = "";
 
   @override
   Widget build(BuildContext context) {
@@ -20,28 +29,39 @@ class MovieScreen extends StatelessWidget {
       drawer: CustomDrawer(),
       body: Container(
         margin: EdgeInsets.only(top: 10),
-        child: _buildMovies(),
+        child: FutureBuilder(
+          future: fetchMovies("$_selectedGenre"),
+          builder: (ctx, AsyncSnapshot<List<Movie>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return _buildMovies(snapshot.data);
+            }
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildMovies() {
+  Widget _buildMovies(List<Movie> movies) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, crossAxisSpacing: 3.0, mainAxisSpacing: 3.0),
-      itemCount: 30,
+      itemCount: movies.length,
       itemBuilder: (context, i) {
+        Movie movie = movies[i];
+
         return GestureDetector(
           child: GridTile(
             child: Image.network(
-              img,
+              movie.imgUrl,
               fit: BoxFit.cover,
             ),
             footer: Container(
               padding: EdgeInsets.all(5),
               color: Colors.black54.withOpacity(0.7),
               child: Text(
-                "title",
+                "${movie.name}",
                 style: TextStyle(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
@@ -68,7 +88,11 @@ class MovieScreen extends StatelessWidget {
           return CircularProgressIndicator();
         } else {
           return PopupMenuButton(
-            onSelected: (_) {},
+            onSelected: (String genreId) {
+              setState(() {
+                _selectedGenre = genreId;
+              });
+            },
             itemBuilder: (ctx) => snapshot.data
                 .map(
                   (genre) => PopupMenuItem(
@@ -84,5 +108,3 @@ class MovieScreen extends StatelessWidget {
   }
 }
 
-final img =
-    "https://images.unsplash.com/photo-1579445710183-f9a816f5da05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60";
