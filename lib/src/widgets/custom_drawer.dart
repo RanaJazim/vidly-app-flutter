@@ -6,6 +6,7 @@ import '../screens/genre_screen.dart';
 import '../screens/movie_screen.dart';
 import '../screens/checkout_screen.dart';
 import '../screens/home_screen.dart';
+import '../screens/favourite_screen.dart';
 import '../providers/auth.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -63,9 +64,21 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.favorite),
+            title: const Text('Favourites'),
+            onTap: () {
+              Navigator.pushReplacementNamed(
+                context,
+                FavouriteScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.supervised_user_circle),
             title: const Text('Logout'),
             onTap: () {
+              Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(context, '/');
               Provider.of<Auth>(context, listen: false).logout();
             },
           ),

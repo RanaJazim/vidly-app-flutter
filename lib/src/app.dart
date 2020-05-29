@@ -6,6 +6,7 @@ import './screens/genre_screen.dart';
 import './screens/movie_screen.dart';
 import './screens/checkout_screen.dart';
 import './screens/login_screen.dart';
+import './screens/favourite_screen.dart';
 import './screens/splash_screen.dart';
 import './providers/auth.dart';
 
@@ -45,6 +46,7 @@ class App extends StatelessWidget {
             GenreScreen.routeName: (context) => GenreScreen(),
             MovieScreen.routeName: (context) => MovieScreen(),
             CheckoutScreen.routeName: (context) => CheckoutScreen(),
+            FavouriteScreen.routeName: (context) => FavouriteScreen(),
           },
         ),
       ),

@@ -65,9 +65,11 @@ class __LoginFormState extends State<_LoginForm> {
       //   HomeScreen.routeName,
       // );
     } catch (ex) {
-      setState(() {
-        isLoad = false;
-      });
+      if (this.mounted) {
+        setState(() {
+          isLoad = false;
+        });
+      }
 
       return showDialog(
         context: context,
@@ -137,23 +139,23 @@ class __LoginFormState extends State<_LoginForm> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         isLoad
-          ? Center(child: CircularProgressIndicator())
-          : SizedBox(
-              width: double.infinity,
-              child: FlatButton(
-                color: const Color(0xffee5164),
-                child: const Text(
-                  'SIGN IN',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+            ? Center(child: CircularProgressIndicator())
+            : SizedBox(
+                width: double.infinity,
+                child: FlatButton(
+                  color: const Color(0xffee5164),
+                  child: const Text(
+                    'SIGN IN',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  onPressed: () {
+                    _loginUser();
+                  },
                 ),
-                onPressed: () {
-                  _loginUser();
-                },
               ),
-            ),
         SizedBox(height: 10),
         NavigateAction(
           'SIGN UP',

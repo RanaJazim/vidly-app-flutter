@@ -34,4 +34,8 @@ class UserService {
       throw ex;
     }
   }
+
+  Future<void> toggleFavourites(String movieId) async {
+    
+  }
 }

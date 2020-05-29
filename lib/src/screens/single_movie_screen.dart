@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../models/movie.dart';
+import '../services/movie_service.dart';
+
 class SingleMovieScreen extends StatelessWidget {
+  final String _id;
+
+  SingleMovieScreen(this._id);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,30 +21,49 @@ class SingleMovieScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            _header(context),
-            SizedBox(height: 30),
-            _shortDescription(),
-            Spacer(),
-            // SizedBox(height: 20),
-            Expanded(child: _caste()),
-          ],
-        ),
+      body: FutureBuilder(
+        future: fetchSingleMovie(_id),
+        builder: (ctx, AsyncSnapshot<Movie> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if (snapshot.hasError) {
+              return Center(child: const Text('Something went wrong'));
+            } else {
+              return _buildMovie(ctx, snapshot.data);
+            }
+          }
+        },
       ),
     );
   }
 
-  Widget _header(context) {
+  Widget _buildMovie(context, Movie movie) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _header(context, movie),
+          SizedBox(height: 30),
+          _shortDescription(movie.description),
+          SizedBox(height: 20),
+          Expanded(child: _caste(movie.mainCaste)),
+          SizedBox(height: 20),
+          Expanded(child: _genres(movie.genres)),
+        ],
+      ),
+    );
+  }
+
+  Widget _header(context, Movie movie) {
     return Row(
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width / 2,
           height: MediaQuery.of(context).size.height / 3,
           child: Image.network(
-            img,
+            movie.imgUrl,
             fit: BoxFit.cover,
           ),
         ),
@@ -46,9 +72,7 @@ class SingleMovieScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Title', overflow: TextOverflow.ellipsis),
-              SizedBox(height: 20),
-              Text('Action, Comedy', overflow: TextOverflow.ellipsis),
+              Text('${movie.name}', overflow: TextOverflow.ellipsis),
               SizedBox(height: 20),
               FlatButton(
                 shape: RoundedRectangleBorder(
@@ -68,47 +92,64 @@ class SingleMovieScreen extends StatelessWidget {
     );
   }
 
-  Widget _shortDescription() {
-    return Text(
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text,",
+  Widget _shortDescription(String description) {
+    return Text("$description");
+  }
+
+  Widget _caste(List<dynamic> caste) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Main Caste',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+        ),
+        SizedBox(height: 5),
+        Row(
+          children: caste
+              .map(
+                (c) => Text(
+                  '${c.toString()}',
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+      ],
     );
   }
 
-  Widget _caste() {
-    return ListView.builder(
-      itemCount: 30,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, i) {
-        return Container(
-          margin: EdgeInsets.all(5),
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: 50,
-                height: 50,
-                child: ClipOval(
-                  child: Image.network(
-                    img,
-                    fit: BoxFit.cover,
+  Widget _genres(List<dynamic> genreList) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Genres',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+        ),
+        SizedBox(height: 5),
+        Row(
+          children: genreList
+              .map(
+                (g) => Text(
+                  "${g["name"]}",
+                  style: TextStyle(
+                    fontSize: 12,
                   ),
                 ),
-              ),
-              SizedBox(height: 5),
-              Container(
-                width: 50,
-                child: Text(
-                  'Text here here here',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+              )
+              .toList(),
+        ),
+      ],
     );
   }
 }
 
-final img =
-    "https://images.unsplash.com/photo-1579445710183-f9a816f5da05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60";

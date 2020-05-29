@@ -5,6 +5,7 @@ import './single_movie_screen.dart';
 import '../services/genre_service.dart';
 import '../services/movie_service.dart';
 import '../models/movie.dart';
+import '../widgets/favourite.dart';
 
 class MovieScreen extends StatefulWidget {
   static const routeName = '/movie';
@@ -57,6 +58,10 @@ class _MovieScreenState extends State<MovieScreen> {
               movie.imgUrl,
               fit: BoxFit.cover,
             ),
+            header: Align(
+              alignment: Alignment.topRight,
+              child: Favourite(movie.id),
+            ),
             footer: Container(
               padding: EdgeInsets.all(5),
               color: Colors.black54.withOpacity(0.7),
@@ -71,7 +76,7 @@ class _MovieScreenState extends State<MovieScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SingleMovieScreen(),
+                builder: (context) => SingleMovieScreen(movie.id),
               ),
             );
           },

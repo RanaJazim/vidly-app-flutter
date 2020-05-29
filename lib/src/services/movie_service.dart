@@ -20,3 +20,15 @@ Future<List<Movie>> fetchMovies(String genreId) async {
     throw ex;
   }
 }
+
+Future<Movie> fetchSingleMovie(String movieId) async {
+  try {
+    final res = await get("$_baseURL/api/movies/$movieId");
+    final parsedData = jsonDecode(res.body);
+
+    final movie = Movie.fromMap(parsedData);
+    return movie;
+  } catch (ex) {
+    throw ex;
+  }
+}
