@@ -18,7 +18,7 @@ class Auth extends ChangeNotifier {
     _name = user['name'];
     _email = user['email'];
     _token = user['token'];
-    _favourites = user['_favourites'];
+    _favourites = user['favourites'];
   }
 
   bool get isAuth {
@@ -63,16 +63,46 @@ class Auth extends ChangeNotifier {
 
   bool isFavourite(String movieId) {
     bool isExist = false;
-
     for (var fav in _favourites) {
       if (fav == movieId) {
         isExist = true;
         break;
       }
     }
-
     return isExist;
   }
+
+  Future<void> toggleFavourite(String movieId) async {
+    final movieIndex = _getIndexOfMovie(movieId);
+    var isMovieRemove = false;
+    if (_isMovieExist(movieIndex)) {
+      _favourites.removeAt(movieIndex);
+      isMovieRemove = true;
+    } else {
+      _favourites.add(movieId);
+    }    
+    notifyListeners();
+
+    await _userService.toggleFavourites(_token, movieId, isMovieRemove);
+  }
+
+  Future<List<Movie>> getFavMovies() async {
+    try {
+      return await _userService.favourites(_token);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  bool _isMovieExist(int mIndex) {
+    return mIndex != -1 ? true : false;
+  }
+
+  int _getIndexOfMovie(String movieId) {
+    return _favourites.indexWhere((favMovie) => favMovie == movieId);
+  }
+
+
 
   Future<void> logout() async {
     final logoutUser = {

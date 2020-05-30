@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_drawer.dart';
-import './single_movie_screen.dart';
 import '../services/genre_service.dart';
 import '../services/movie_service.dart';
 import '../models/movie.dart';
-import '../widgets/favourite.dart';
+import '../widgets/movies_list.dart';
 
 class MovieScreen extends StatefulWidget {
   static const routeName = '/movie';
@@ -45,44 +44,7 @@ class _MovieScreenState extends State<MovieScreen> {
   }
 
   Widget _buildMovies(List<Movie> movies) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, crossAxisSpacing: 3.0, mainAxisSpacing: 3.0),
-      itemCount: movies.length,
-      itemBuilder: (context, i) {
-        Movie movie = movies[i];
-
-        return GestureDetector(
-          child: GridTile(
-            child: Image.network(
-              movie.imgUrl,
-              fit: BoxFit.cover,
-            ),
-            header: Align(
-              alignment: Alignment.topRight,
-              child: Favourite(movie.id),
-            ),
-            footer: Container(
-              padding: EdgeInsets.all(5),
-              color: Colors.black54.withOpacity(0.7),
-              child: Text(
-                "${movie.name}",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SingleMovieScreen(movie.id),
-              ),
-            );
-          },
-        );
-      },
-    );
+    return MovieList(movies);
   }
 
   Widget _popMenu() {

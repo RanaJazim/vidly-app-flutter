@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
 import '../services/movie_service.dart';
+import '../widgets/favourite.dart';
 
 class SingleMovieScreen extends StatelessWidget {
   final String _id;
@@ -15,10 +16,7 @@ class SingleMovieScreen extends StatelessWidget {
         title: const Text('Movie Title'),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {},
-          ),
+          Favourite(_id, color: Colors.white),
         ],
       ),
       body: FutureBuilder(
