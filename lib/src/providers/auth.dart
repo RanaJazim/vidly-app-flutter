@@ -18,7 +18,7 @@ class Auth extends ChangeNotifier {
     _name = user['name'];
     _email = user['email'];
     _token = user['token'];
-    _favourites = user['favourites'];
+    _favourites = user['favourites'] == null ? [] : user['favourites'];
   }
 
   bool get isAuth {
@@ -41,8 +41,7 @@ class Auth extends ChangeNotifier {
   Future<bool> register(String name, String email, String password) async {
     try {
       return await _userService.register(name, email, password);
-    }
-    catch (ex) {
+    } catch (ex) {
       throw ex;
     }
   }
@@ -55,8 +54,7 @@ class Auth extends ChangeNotifier {
 
       // adding user to local storage i.e inside mobile local storage
       await _localStorage.setUser(jsonEncode(user));
-    }
-    catch (ex) {
+    } catch (ex) {
       throw ex;
     }
   }
@@ -80,18 +78,21 @@ class Auth extends ChangeNotifier {
       isMovieRemove = true;
     } else {
       _favourites.add(movieId);
-    }    
+    }
     notifyListeners();
 
     await _userService.toggleFavourites(_token, movieId, isMovieRemove);
   }
 
   Future<List<Movie>> getFavMovies() async {
-    try {
-      return await _userService.favourites(_token);
-    } catch (ex) {
-      throw ex;
+    if (_token != null) {
+      try {
+        return await _userService.favourites(_token);
+      } catch (ex) {
+        throw ex;
+      }
     }
+    return [];
   }
 
   bool _isMovieExist(int mIndex) {
@@ -101,8 +102,6 @@ class Auth extends ChangeNotifier {
   int _getIndexOfMovie(String movieId) {
     return _favourites.indexWhere((favMovie) => favMovie == movieId);
   }
-
-
 
   Future<void> logout() async {
     final logoutUser = {
@@ -115,9 +114,8 @@ class Auth extends ChangeNotifier {
     _setUserAttr(logoutUser);
 
     notifyListeners();
-    
+
     // removing user from local storage
     await _localStorage.removeUser();
   }
-
 }

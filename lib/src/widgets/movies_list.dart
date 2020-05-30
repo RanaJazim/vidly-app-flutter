@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
 import '../widgets/favourite.dart';
 import '../screens/single_movie_screen.dart';
+import '../providers/auth.dart';
 
 class MovieList extends StatelessWidget {
   final List<Movie> _movies;
@@ -26,7 +28,9 @@ class MovieList extends StatelessWidget {
             ),
             header: Align(
               alignment: Alignment.topRight,
-              child: Favourite(movie.id),
+              child: Consumer<Auth>(
+                builder: (ctx, auth, _) => Favourite(movie.id, auth),
+              ),
             ),
             footer: Container(
               padding: EdgeInsets.all(5),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
 import '../services/movie_service.dart';
 import '../widgets/favourite.dart';
+import '../providers/auth.dart';
 
 class SingleMovieScreen extends StatelessWidget {
   final String _id;
@@ -16,7 +18,9 @@ class SingleMovieScreen extends StatelessWidget {
         title: const Text('Movie Title'),
         centerTitle: true,
         actions: <Widget>[
-          Favourite(_id, color: Colors.white),
+          Consumer<Auth>(
+                builder: (ctx, auth, _) => Favourite(_id, auth),
+              ),
         ],
       ),
       body: FutureBuilder(

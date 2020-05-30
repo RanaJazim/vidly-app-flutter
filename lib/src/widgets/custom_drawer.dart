@@ -1,3 +1,4 @@
+import 'package:first_project/src/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -77,7 +78,6 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.supervised_user_circle),
             title: const Text('Logout'),
             onTap: () {
-              Navigator.of(context).pop();
               Navigator.pushReplacementNamed(context, '/');
               Provider.of<Auth>(context, listen: false).logout();
             },

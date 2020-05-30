@@ -6,19 +6,18 @@ import '../providers/auth.dart';
 class Favourite extends StatelessWidget {
   final String _id;
   final Color color;
+  final Auth _auth;
 
-  Favourite(this._id, {this.color = Colors.red});
+  Favourite(this._id, this._auth, {this.color = Colors.red});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (ctx, auth, _) => IconButton(
-        icon: _getAppropriateIcon(auth),
+    return IconButton(
+        icon: _getAppropriateIcon(_auth),
         onPressed: () async {
-          await auth.toggleFavourite(_id);
+          await _auth.toggleFavourite(_id);
         },
-      ),
-    );
+      );
   }
 
   Widget _getAppropriateIcon(Auth auth) {
