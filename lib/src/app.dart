@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './screens/home_screen.dart';
-import './screens/genre_screen.dart';
 import './screens/movie_screen.dart';
 import './screens/checkout_screen.dart';
 import './screens/login_screen.dart';
@@ -43,7 +42,6 @@ class App extends StatelessWidget {
                 ),
           routes: {
             HomeScreen.routeName: (context) => HomeScreen(),
-            GenreScreen.routeName: (context) => GenreScreen(),
             MovieScreen.routeName: (context) => MovieScreen(),
             CheckoutScreen.routeName: (context) => CheckoutScreen(),
             FavouriteScreen.routeName: (context) => FavouriteScreen(),

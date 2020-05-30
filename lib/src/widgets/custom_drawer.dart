@@ -1,9 +1,7 @@
-import 'package:first_project/src/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../config/app_config.dart';
-import '../screens/genre_screen.dart';
 import '../screens/movie_screen.dart';
 import '../screens/checkout_screen.dart';
 import '../screens/home_screen.dart';
@@ -31,16 +29,6 @@ class CustomDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(
                 context,
                 HomeScreen.routeName,
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.category),
-            title: const Text('Genres'),
-            onTap: () {
-              Navigator.pushReplacementNamed(
-                context,
-                GenreScreen.routeName,
               );
             },
           ),
